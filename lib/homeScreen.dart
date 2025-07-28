@@ -67,7 +67,7 @@ class ButtonS extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(double.infinity, 68),      
+        fixedSize: Size(double.infinity, 68),
         backgroundColor: color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.all(Radius.circular(12)),
