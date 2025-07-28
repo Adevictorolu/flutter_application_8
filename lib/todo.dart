@@ -53,33 +53,29 @@ class _TodaScreenState extends State<TodaScreen> {
             ],
           ),
           title: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  'My Tasks',
-                  style: TextStyle(color: Colors.black45, fontSize: 16),
-                ),
-                Gap(5),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.add_circle_outlined,
-                    color: Colors.blue.shade300,
-                    size: 14,
-                  ),
-                ),
-              ],
+            child: Text(
+              'My Tasks',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.add_circle_outlined,
+                color: Colors.blue.shade300,
+                size: 30,
+              ),
+            ),
+          ],
           elevation: 10,
           shadowColor: Colors.black54,
         ),
-        body: TabBarView(children: [
-          Row(
-            
-          )
-        ]),
+        body: TabBarView(children: [Row()]),
       ),
     );
   }
