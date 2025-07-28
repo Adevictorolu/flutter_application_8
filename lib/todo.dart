@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+
+class TodaScreen extends StatefulWidget {
+  const TodaScreen({super.key});
+
+  @override
+  State<TodaScreen> createState() => _TodaScreenState();
+}
+
+class _TodaScreenState extends State<TodaScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'All',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Completed',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Pending',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          title: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  'My Tasks',
+                  style: TextStyle(color: Colors.black45, fontSize: 16),
+                ),
+                Gap(5),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.add_circle_outlined,
+                    color: Colors.blue.shade300,
+                    size: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          elevation: 10,
+          shadowColor: Colors.black54,
+        ),
+        body: TabBarView(children: [
+          Row(
+            
+          )
+        ]),
+      ),
+    );
+  }
+}

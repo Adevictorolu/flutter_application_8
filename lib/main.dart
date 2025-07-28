@@ -12,9 +12,10 @@ class PropelApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PROPEL Mentorship',
-      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.indigo, fontFamily: 'Montserrat'),
+      theme: ThemeData( fontFamily: 'Montserrat'),
       debugShowCheckedModeBanner: false,
       home: const Homescreen(),
     );
   }
 }
+

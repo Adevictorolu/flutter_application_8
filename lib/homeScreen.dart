@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -26,9 +28,11 @@ class _HomescreenState extends State<Homescreen> {
         ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'asset/img/illustration continue with phone.svg',
+            'asset/img/illustration course screen.svg',
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.7,
           ),
@@ -40,6 +44,7 @@ class _HomescreenState extends State<Homescreen> {
             ),
             color: Colors.blue.shade400,
           ),
+          Gap(8),
           ButtonS(
             text: Text(
               'Sign in',
@@ -62,6 +67,7 @@ class ButtonS extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        fixedSize: Size(double.infinity, 68),      
         backgroundColor: color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.all(Radius.circular(12)),
