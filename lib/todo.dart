@@ -8,26 +8,46 @@ class TodaScreen extends StatefulWidget {
 }
 
 class _TodaScreenState extends State<TodaScreen> {
-  List a = [
-    ListTile(
+  // void checkboxchanged(int index) {
+  //   setState(() {
+  //     if (value != null) {
+  //       onChanged!(value);
+  //     }
+  //   });
+  // }
+
+  Widget a() {
+    return ListTile(
       title: Text(
         'Buy Groceries',
         style: TextStyle(
           color: Colors.black,
-          fontSize: 20,
+          fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
       ),
       subtitle: Text(
         'Grocery Shopping',
         style: TextStyle(
-          color: Colors.grey.shade300,
-          fontSize: 18,
+          fontSize: 12,
           fontWeight: FontWeight.w400,
+          color: Colors.grey.shade300,
         ),
       ),
-    ),
-  ];
+      leading: Checkbox(
+        value: false,
+        onChanged: (value) {
+          setState(() {
+            if (value != null) {
+              value = true;
+            }
+          });
+        },
+        activeColor: Colors.blue.shade300,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -96,74 +116,21 @@ class _TodaScreenState extends State<TodaScreen> {
         ),
         body: TabBarView(
           children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  ListTile(
-                    title: Text(
-                      'Buy Groceries',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Grocery Shopping',
-                      style: TextStyle(
-                        color: Colors.grey.shade300,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            ListView.builder(
+              itemBuilder: (context, index) {
+                return Container(padding: EdgeInsets.all(10), child: a());
+              },
             ),
-            ListView(
-                children: [
-                  ListTile(
-                    title: Text(
-                      'Buy Groceries',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Grocery Shopping',
-                      style: TextStyle(
-                        color: Colors.grey.shade300,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              ListView(
-                children: [
-                  ListTile(
-                    title: Text(
-                      'Buy Groceries',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Grocery Shopping',
-                      style: TextStyle(
-                        color: Colors.grey.shade300,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            ListView.builder(
+              itemBuilder: (context, index) {
+                return Container(padding: EdgeInsets.all(10), child: a());
+              },
+            ),
+            ListView.builder(
+              itemBuilder: (context, index) {
+                return Container(padding: EdgeInsets.all(10), child: a());
+              },
+            ),
           ],
         ),
       ),
