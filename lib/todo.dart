@@ -15,6 +15,8 @@ class _TodaScreenState extends State<TodaScreen> {
   //     }
   //   });
   // }
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _isChecked = false;
 
   Widget a() {
     return ListTile(
@@ -35,12 +37,10 @@ class _TodaScreenState extends State<TodaScreen> {
         ),
       ),
       leading: Checkbox(
-        value: false,
+        value: _isChecked,
         onChanged: (value) {
           setState(() {
-            if (value != null) {
-              value = true;
-            }
+            _isChecked = value ?? false;
           });
         },
         activeColor: Colors.blue.shade300,
@@ -53,6 +53,7 @@ class _TodaScreenState extends State<TodaScreen> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           bottom: TabBar(
             tabs: [
@@ -103,7 +104,42 @@ class _TodaScreenState extends State<TodaScreen> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      padding: EdgeInsets.all(20),
+                      height: 200,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Task Title',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Description',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('Add Task'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
               icon: Icon(
                 Icons.add_circle_outlined,
                 color: Colors.blue.shade300,
