@@ -17,14 +17,21 @@ class _TodaScreenState extends State<TodaScreen> {
   // }
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isChecked = false;
+  final TextEditingController _taskTitleController = TextEditingController();
+  final TextEditingController _taskDescriptionController = TextEditingController();
+  final List<Map<String, dynamic>> _tasks = [
+    
+  ];
 
   Widget a() {
     return ListTile(
       title: Text(
         'Buy Groceries',
         style: TextStyle(
+          decoration: _isChecked ? TextDecoration.lineThrough : TextDecoration.none,
           color: Colors.black,
           fontSize: 15,
+          
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -105,40 +112,53 @@ class _TodaScreenState extends State<TodaScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                showBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      padding: EdgeInsets.all(20),
-                      height: 200,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                scaffoldKey.currentState?.showBottomSheet((context) {
+                  return Container(
+                    padding: EdgeInsets.all(20),
+                    height: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextField(
-                            decoration: InputDecoration(
-                              labelText: 'Task Title',
-                              border: OutlineInputBorder(),
-                            ),
+                        TextField(
+                          controller: _taskTitleController,
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                          labelText: 'Task Title',
+                          border: OutlineInputBorder(),
                           ),
-                          SizedBox(height: 10),
-                          TextField(
-                            decoration: InputDecoration(
-                              labelText: 'Description',
-                              border: OutlineInputBorder(),
-                            ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          controller: _taskDescriptionController,
+                          decoration: InputDecoration(
+                          labelText: 'Description',
+                          border: OutlineInputBorder(),
                           ),
-                          SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Add Task'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
+                        ),
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                          String title = _taskTitleController.text.trim();
+                          String description = _taskDescriptionController.text.trim();
+                          if (title.isNotEmpty) {
+                            setState(() {
+                            _tasks.add({
+                              'title': title,
+                              'description': description,
+                              'completed': false,
+                            });
+                            });
+                            _taskTitleController.clear();
+                            _taskDescriptionController.clear();
+                            Navigator.pop(context);
+                          }
+                          },
+                          child: Text('Add Task'),
+                        ),
+                      ],
+                    ),
+                  );
+                });
               },
               icon: Icon(
                 Icons.add_circle_outlined,
@@ -152,10 +172,12 @@ class _TodaScreenState extends State<TodaScreen> {
         ),
         body: TabBarView(
           children: [
-            ListView.builder(
-              itemBuilder: (context, index) {
-                return Container(padding: EdgeInsets.all(10), child: a());
-              },
+            Container(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return Container(padding: EdgeInsets.all(10), child: a());
+                },
+              ),
             ),
             ListView.builder(
               itemBuilder: (context, index) {
