@@ -1,78 +1,149 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_8/utils/todopack.dart';
 
-class Homepage extends StatefulWidget {
-  const Homepage({super.key});
-
-  @override
-  State<Homepage> createState() => _HomepageState();
+void main() {
+  runApp(ToDoApp());
 }
 
-class _HomepageState extends State<Homepage> {
+class ToDoApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'ToDo List',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: ToDoHome(),
+    );
+  }
+}
 
-  final controller = TextEditingController();
+class Task {
+  String title;
+  bool isCompleted;
 
-  List todoList = [
-    ['Buy Groceries', false],
-    ['Attend Team Meeting', false],
-  ];
-  
-  void savenewtask(){
+  Task({required this.title, this.isCompleted = false});
+}
+
+class ToDoHome extends StatefulWidget {
+  @override
+  _ToDoHomeState createState() => _ToDoHomeState();
+}
+
+class _ToDoHomeState extends State<ToDoHome>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  List<Task> tasks = [];
+
+  final TextEditingController taskController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  void addTask(String title) {
+    if (title.isNotEmpty) {
+      setState(() {
+        tasks.add(Task(title: title));
+      });
+      taskController.clear();
+      Navigator.pop(context);
+    }
+  }
+
+  void toggleTask(Task task) {
     setState(() {
-      todoList.add({controller.text, false});
-      controller.clear();
+      task.isCompleted = !task.isCompleted;
     });
   }
 
-  void changed(int index) {
-    todoList[index][1] = !todoList[index][1];
+  void deleteTask(Task task) {
+    setState(() {
+      tasks.remove(task);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Simple Todo List'),
-        backgroundColor: Colors.blue.shade300,
-        foregroundColor: Colors.white,
+        title: Text('ToDo List'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: 'Tasks'),
+            Tab(text: 'Completed'),
+            Tab(text: 'Pending'),
+          ],
+        ),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return Todopack(
-            taskname: todoList[index][0],
-            taskcompleted: todoList[index][1],
-            onChanged: (value) {
-              changed(index);
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          buildTaskList(tasks),
+          buildTaskList(tasks.where((t) => t.isCompleted).toList()),
+          buildTaskList(tasks.where((t) => !t.isCompleted).toList()),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) {
+              return Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: taskController,
+                      decoration: InputDecoration(
+                        labelText: 'New Task',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () => addTask(taskController.text),
+                      child: Text('Add Task'),
+                    )
+                  ],
+                ),
+              );
             },
           );
         },
+        child: Icon(Icons.add),
       ),
-      floatingActionButton: Row(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
-              child: TextField(
-                controller: controller,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.blue.shade800,
-                  hintText: 'Add New Task here',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.all(Radius.circular(15))
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.all(Radius.circular(15))
-                  ),
-                ),
-              ),
+    );
+  }
+
+  Widget buildTaskList(List<Task> list) {
+    if (list.isEmpty) {
+      return Center(child: Text('No tasks yet.'));
+    }
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (context, index) {
+        var task = list[index];
+        return ListTile(
+          title: Text(
+            task.title,
+            style: TextStyle(
+              decoration:
+                  task.isCompleted ? TextDecoration.lineThrough : null,
             ),
           ),
-          FloatingActionButton(onPressed: savenewtask, child: Icon(Icons.add)),
-        ],
-      ),
+          leading: Checkbox(
+            value: task.isCompleted,
+            onChanged: (val) => toggleTask(task),
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.delete, color: Colors.red),
+            onPressed: () => deleteTask(task),
+          ),
+        );
+      },
     );
   }
 }

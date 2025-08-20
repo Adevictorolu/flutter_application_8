@@ -14,7 +14,7 @@ class PropelApp extends StatelessWidget {
       title: 'PROPEL Mentorship',
       theme: ThemeData( fontFamily: 'Montserrat'),
       debugShowCheckedModeBanner: false,
-      home: const Homepage(),
+      home: ToDoApp(),
     );
   }
 }
