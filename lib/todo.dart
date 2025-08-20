@@ -22,7 +22,9 @@ class _TodaScreenState extends State<TodaScreen> {
   final List<Map<String, dynamic>> _tasks = [
     
   ];
-
+  List b = [
+    ('Buy Groceries', 'Grocery Shopping'), ('Timing', 'Time Table')
+  ];
   Widget a() {
     return ListTile(
       title: Text(
@@ -172,12 +174,10 @@ class _TodaScreenState extends State<TodaScreen> {
         ),
         body: TabBarView(
           children: [
-            Container(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Container(padding: EdgeInsets.all(10), child: a());
-                },
-              ),
+            ListView.builder(
+              itemBuilder: (context, index) {
+                return Container(padding: EdgeInsets.all(10), child: a());
+              },
             ),
             ListView.builder(
               itemBuilder: (context, index) {
