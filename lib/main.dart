@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_8/homeScreen.dart';
-import 'package:flutter_application_8/router/route.dart';
+import 'package:flutter_application_8/todo.dart';
 
 void main() {
   runApp(const PropelApp());
@@ -12,12 +11,10 @@ class PropelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: RouteManger.homepage,
-      onGenerateRoute: generateRoute,
       title: 'PROPEL Mentorship',
       theme: ThemeData( fontFamily: 'Montserrat'),
       debugShowCheckedModeBanner: false,
-      home: const Homescreen(),
+      home: const Homepage(),
     );
   }
 }
